@@ -1,21 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/resources/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#121212"
-    android:padding="16dp">
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp"
+    android:paddingTop="32dp">
 
-    <!-- Barra de Pesquisa -->
-    <EditText
-        android:id="@+id/etSearch"
+    <!-- Container da Barra de Pesquisa -->
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Pesquisar títulos..."
-        android:textColorHint="#888888"
-        android:textColor="#FFFFFF"
-        android:padding="12dp"
-        android:inputType="text"
-        android:maxLines="1" />
+        android:layout_height="48dp"
+        android:background="@drawable/bg_search_bar"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp">
+
+        <!-- Campo de Texto -->
+        <EditText
+            android:id="@+id/etSearch"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toStartOf="@+id/ivSearchIcon"
+            android:background="@null"
+            android:hint="Pesquisar títulos..."
+            android:textColorHint="#8E8E93"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"
+            android:inputType="text"
+            android:maxLines="1" />
+
+        <!-- Ícone de Lupa -->
+        <ImageView
+            android:id="@+id/ivSearchIcon"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:src="@android:drawable/ic_menu_search"
+            android:tint="#8E8E93" />
+
+    </RelativeLayout>
 
 </LinearLayout>

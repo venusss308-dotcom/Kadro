@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/resources/android"
+    android:shape="rectangle">
+    <!-- Cor de fundo cinza escuro translúcido -->
+    <solid android:color="#2A2A2E" />
+    <!-- Bordas bem arredondadas estilo pílula -->
+    <corners android:radius="24dp" />
+</shape>
