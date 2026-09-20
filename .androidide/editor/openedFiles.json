@@ -1,35 +1,20 @@
 {
   "allFiles": [
     {
-      "file": "/storage/emulated/0/AndroidIDEProjects/Kadro/app/src/main/res/drawable/bg_search_bar.xml",
+      "file": "/storage/emulated/0/AndroidIDEProjects/Kadro/app/src/main/AndroidManifest.xml",
       "selection": {
         "end": {
           "column": 0,
-          "index": 329,
-          "line": 8
+          "index": 860,
+          "line": 26
         },
         "start": {
           "column": 0,
-          "index": 329,
-          "line": 8
-        }
-      }
-    },
-    {
-      "file": "/storage/emulated/0/AndroidIDEProjects/Kadro/app/src/main/res/layout/activity_main.xml",
-      "selection": {
-        "end": {
-          "column": 0,
-          "index": 1564,
-          "line": 45
-        },
-        "start": {
-          "column": 0,
-          "index": 1564,
-          "line": 45
+          "index": 860,
+          "line": 26
         }
       }
     }
   ],
-  "selectedFile": "/storage/emulated/0/AndroidIDEProjects/Kadro/app/src/main/res/layout/activity_main.xml"
+  "selectedFile": "/storage/emulated/0/AndroidIDEProjects/Kadro/app/src/main/AndroidManifest.xml"
 }
