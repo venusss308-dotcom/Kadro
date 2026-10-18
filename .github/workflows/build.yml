@@ -1,0 +1,32 @@
+name: Build Android APK
+
+on:
+  push:
+    branches: [ "main", "master" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout do Código
+      uses: actions/checkout@v4
+
+    - name: Configurar o Java JDK
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin'
+        java-version: '17'
+
+    - name: Dar permissão de execução ao Gradle
+      run: chmod +x gradlew
+
+    - name: Compilar o APK (Debug)
+      run: ./gradlew assembleDebug
+
+    - name: Salvar o APK gerado
+      uses: actions/upload-artifact@v4
+      with:
+        name: Kadro-App-Debug
+        path: app/build/outputs/apk/debug/app-debug.apk
+        
