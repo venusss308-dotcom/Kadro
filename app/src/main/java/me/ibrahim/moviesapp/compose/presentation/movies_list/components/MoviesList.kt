@@ -1,7 +1,6 @@
 package me.ibrahim.moviesapp.compose.presentation.movies_list.components
 
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -23,7 +22,7 @@ fun MoviesList(movies: List<Movie>, onMovieClick: (Movie) -> Unit) {
         pageSpacing = 16.dp,
         modifier = Modifier
             .fillMaxWidth()
-            .height(320.dp)
+            .height(380.dp)
     ) { page ->
         val movie = movies[page]
         MovieItem(
