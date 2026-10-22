@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MoviesApp-Comp</string>
+    <string name="app_name">Kadro</string>
     <string name="title_activity_splash">SplashActivity</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_movies_list_screen">What would you like to watch?</string>
