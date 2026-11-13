@@ -56,9 +56,9 @@ fun MoviesListScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState()),
-            verticalArrangement = Arrangement.spacedBy(20.dp)
+            verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(4.dp))
 
             // Barra de pesquisa minimalista no topo
             Box(
@@ -66,10 +66,10 @@ fun MoviesListScreen(
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp)
                     .statusBarsPadding()
-                    .height(52.dp)
+                    .height(50.dp)
                     .background(
                         color = Color(0xFF1E1E1E),
-                        shape = RoundedCornerShape(26.dp)
+                        shape = RoundedCornerShape(25.dp)
                     )
                     .padding(horizontal = 20.dp),
                 contentAlignment = Alignment.CenterStart
@@ -82,20 +82,20 @@ fun MoviesListScreen(
                     Text(
                         text = "Procurar títulos",
                         color = Color.Gray,
-                        fontSize = 16.sp
+                        fontSize = 15.sp
                     )
                     Icon(
                         imageVector = Icons.Filled.Search,
                         contentDescription = "Pesquisar",
                         tint = Color.Gray,
-                        modifier = Modifier.size(24.dp)
+                        modifier = Modifier.size(22.dp)
                     )
                 }
             }
 
-            Spacer(modifier = Modifier.height(12.dp))
+            Spacer(modifier = Modifier.height(4.dp))
 
-            // Cabeçalho "Em Alta" com setinha e seletor "Filmes" / "Séries"
+            // Cabeçalho: "Em Alta" na esquerda e "Filmes ▾" na direita
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -103,48 +103,47 @@ fun MoviesListScreen(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(4.dp)
-                ) {
-                    Text(
-                        text = "Em Alta",
-                        color = Color.White,
-                        fontSize = 24.sp,
-                        fontWeight = FontWeight.Bold
-                    )
-                    Icon(
-                        imageVector = Icons.Filled.KeyboardArrowDown,
-                        contentDescription = "Opções",
-                        tint = Color.White,
-                        modifier = Modifier.size(26.dp)
-                    )
-                }
-
-                // Seletor interativo Filmes / Séries
                 Text(
-                    text = selectedCategory,
+                    text = "Em Alta",
                     color = Color.White,
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold,
+                    fontSize = 22.sp,
+                    fontWeight = FontWeight.Bold
+                )
+
+                Row(
                     modifier = Modifier
                         .clickable {
                             selectedCategory = if (selectedCategory == "Filmes") "Séries" else "Filmes"
                         }
-                        .padding(4.dp)
-                )
+                        .padding(4.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(2.dp)
+                ) {
+                    Text(
+                        text = selectedCategory,
+                        color = Color.White,
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                    Icon(
+                        imageVector = Icons.Filled.KeyboardArrowDown,
+                        contentDescription = "Trocar Categoria",
+                        tint = Color.White,
+                        modifier = Modifier.size(22.dp)
+                    )
+                }
             }
 
-            Spacer(modifier = Modifier.height(4.dp))
+            Spacer(modifier = Modifier.height(2.dp))
 
-            // Lista horizontal de "Em Alta" exibida direto sem loading
+            // Lista horizontal de "Em Alta"
             TitledMoviesList(title = "") {
                 MoviesList(movies = state.nowPlayingMovies, onMovieClick = onMovieClick)
             }
 
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(16.dp))
 
-            // Seção de Novos Episódios
+            // Seção "Novos Episódios" (populada com lançamentos atuais)
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -154,16 +153,18 @@ fun MoviesListScreen(
                 Text(
                     text = "Novos Episódios",
                     color = Color.White,
-                    fontSize = 22.sp,
+                    fontSize = 20.sp,
                     fontWeight = FontWeight.Bold
                 )
             }
+
+            Spacer(modifier = Modifier.height(2.dp))
 
             TitledMoviesList(title = "") {
                 MoviesList(movies = state.upcomingMovies, onMovieClick = onMovieClick)
             }
 
-            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(24.dp))
         }
     }
 }
