@@ -22,11 +22,11 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
-import me.ibrahim.moviesapp.compose.domain.Movie
+import me.ibrahim.moviesapp.compose.domain.TvShow
 
 @Composable
 fun EpisodeItem(
-    movie: Movie,
+    tvShow: TvShow,
     onClick: () -> Unit
 ) {
     Column(
@@ -34,7 +34,6 @@ fun EpisodeItem(
             .width(160.dp)
             .clickable(onClick = onClick)
     ) {
-        // Imagem horizontal do episódio
         Box(
             modifier = Modifier
                 .width(160.dp)
@@ -43,13 +42,13 @@ fun EpisodeItem(
                 .background(Color.DarkGray)
         ) {
             AsyncImage(
-                model = movie.posterPath,
-                contentDescription = movie.title,
+                model = tvShow.posterPath,
+                contentDescription = tvShow.name,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier.fillMaxSize()
             )
 
-            // Selo de data/hora flutuando no canto inferior esquerdo da imagem
+            // Selo de data real flutuando na imagem
             Box(
                 modifier = Modifier
                     .align(Alignment.BottomStart)
@@ -59,7 +58,7 @@ fun EpisodeItem(
                     .padding(horizontal = 6.dp, vertical = 3.dp)
             ) {
                 Text(
-                    text = movie.releaseDate ?: "Em breve",
+                    text = tvShow.firstAirDate ?: "Novo",
                     color = Color.White,
                     fontSize = 10.sp,
                     fontWeight = FontWeight.Medium
@@ -69,9 +68,9 @@ fun EpisodeItem(
 
         Spacer(modifier = Modifier.height(6.dp))
 
-        // Título da série / Nome do episódio embaixo
+        // Nome real da série
         Text(
-            text = movie.title ?: "",
+            text = tvShow.name ?: "",
             color = Color.White,
             fontSize = 14.sp,
             fontWeight = FontWeight.Bold,
@@ -79,7 +78,7 @@ fun EpisodeItem(
             overflow = TextOverflow.Ellipsis
         )
         Text(
-            text = "Temporada e Episódio", // Subtítulo ou info complementar
+            text = "Série em Exibição",
             color = Color.Gray,
             fontSize = 12.sp,
             maxLines = 1,

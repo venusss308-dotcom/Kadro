@@ -19,12 +19,14 @@ class MoviesListViewModel(private val repository: MoviesRepository) : ViewModel(
 
     private var nowPlayingMoviesListJob: Job? = null
     private var upcomingMoviesListJob: Job? = null
+    private var tvShowsListJob: Job? = null
 
     private val _state = MutableStateFlow(MoviesListState())
     val state = _state
         .onStart {
             fetchNowPlayingMovies()
             fetchUpcomingMovies()
+            fetchTvShows() // Dispara a busca de séries reais ao abrir
         }
         .stateIn(
             viewModelScope,
@@ -34,21 +36,11 @@ class MoviesListViewModel(private val repository: MoviesRepository) : ViewModel(
 
     private fun fetchUpcomingMovies() {
         upcomingMoviesListJob?.cancel()
-
         upcomingMoviesListJob = viewModelScope.launch(Dispatchers.IO) {
-            _state.update { it.copy(isLoading = true) }
             repository.fetchUpcomingMovies().onSuccess { movies ->
-                _state.update {
-                    it.copy(
-                        upcomingMovies = movies, isLoading = false, errorMsg = null
-                    )
-                }
+                _state.update { it.copy(upcomingMovies = movies, errorMsg = null) }
             }.onError { error ->
-                _state.update {
-                    it.copy(
-                        isLoading = false, upcomingMovies = emptyList(), errorMsg = error.toUiText()
-                    )
-                }
+                _state.update { it.copy(errorMsg = error.toUiText()) }
             }
         }
     }
@@ -56,19 +48,21 @@ class MoviesListViewModel(private val repository: MoviesRepository) : ViewModel(
     private fun fetchNowPlayingMovies() {
         nowPlayingMoviesListJob?.cancel()
         nowPlayingMoviesListJob = viewModelScope.launch(Dispatchers.IO) {
-            _state.update { it.copy(isLoading = true) }
             repository.fetchNowPlayingMovies().onSuccess { movies ->
-                _state.update {
-                    it.copy(
-                        nowPlayingMovies = movies, isLoading = false, errorMsg = null
-                    )
-                }
+                _state.update { it.copy(nowPlayingMovies = movies, errorMsg = null) }
             }.onError { error ->
-                _state.update {
-                    it.copy(
-                        isLoading = false, nowPlayingMovies = emptyList(), errorMsg = error.toUiText()
-                    )
-                }
+                _state.update { it.copy(errorMsg = error.toUiText()) }
+            }
+        }
+    }
+
+    private fun fetchTvShows() {
+        tvShowsListJob?.cancel()
+        tvShowsListJob = viewModelScope.launch(Dispatchers.IO) {
+            repository.fetchTvShows().onSuccess { shows ->
+                _state.update { it.copy(tvShows = shows, errorMsg = null) }
+            }.onError { error ->
+                _state.update { it.copy(errorMsg = error.toUiText()) }
             }
         }
     }

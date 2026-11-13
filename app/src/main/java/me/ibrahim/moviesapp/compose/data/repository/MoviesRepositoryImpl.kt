@@ -11,6 +11,7 @@ import me.ibrahim.moviesapp.compose.domain.Actor
 import me.ibrahim.moviesapp.compose.domain.DataError
 import me.ibrahim.moviesapp.compose.domain.Movie
 import me.ibrahim.moviesapp.compose.domain.MoviesRepository
+import me.ibrahim.moviesapp.compose.domain.TvShow // Import do modelo TvShow
 import me.ibrahim.moviesapp.compose.domain.Result
 import me.ibrahim.moviesapp.compose.domain.map
 
@@ -50,6 +51,25 @@ class MoviesRepositoryImpl(
             }
     }
 
+    // Implementação real para buscar as séries de TV
+    override suspend fun fetchTvShows(): Result<List<TvShow>, DataError.Remote> {
+        return moviesRemoteApi.fetchTvShows()
+            .map { response ->
+                response.results?.let { tvShowsDto ->
+                    tvShowsDto.map { dto ->
+                        TvShow(
+                            id = dto.id,
+                            name = dto.title ?: dto.originalTitle, // Adapta para o nome da série
+                            overview = dto.overview,
+                            posterPath = dto.posterPath,
+                            backdropPath = dto.backdropPath,
+                            firstAirDate = dto.releaseDate,
+                            voteAverage = dto.voteAverage
+                        )
+                    }
+                } ?: emptyList()
+            }
+    }
 
     //database operations
     override suspend fun insertFavoriteMovie(movie: Movie) {

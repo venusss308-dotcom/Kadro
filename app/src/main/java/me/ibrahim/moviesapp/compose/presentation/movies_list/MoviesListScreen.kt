@@ -64,7 +64,7 @@ fun MoviesListScreen(
         ) {
             Spacer(modifier = Modifier.height(2.dp))
 
-            // Barra de pesquisa minimalista no topo (colada no topo igual ao exemplo)
+            // Barra de pesquisa minimalista no topo
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -97,7 +97,7 @@ fun MoviesListScreen(
                 }
             }
 
-            // Cabeçalho: "Em Alta" na esquerda e "Filmes ▾" na direita (perto dos cards)
+            // Cabeçalho: "Em Alta" na esquerda e "Filmes ▾" na direita
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -136,14 +136,14 @@ fun MoviesListScreen(
                 }
             }
 
-            // Lista horizontal de "Em Alta" (Cards verticais imersivos)
+            // Lista horizontal de "Em Alta" (Filmes)
             TitledMoviesList(title = "") {
                 MoviesList(movies = state.nowPlayingMovies, onMovieClick = onMovieClick)
             }
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            // Seção "NOVOS EPISÓDIOS" (Título em letras maiúsculas igual ao exemplo)
+            // Seção "NOVOS EPISÓDIOS" com séries reais
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -158,16 +158,18 @@ fun MoviesListScreen(
                 )
             }
 
-            // Lista horizontal de Novos Episódios com os cards horizontais menores
+            // Lista horizontal consumindo state.tvShows em vez de filmes
             LazyRow(
                 contentPadding = PaddingValues(horizontal = 16.dp),
                 horizontalArrangement = Arrangement.spacedBy(12.dp),
                 modifier = Modifier.fillMaxWidth()
             ) {
-                items(state.upcomingMovies, key = { movie -> movie.id }) { movie ->
+                items(state.tvShows, key = { show -> show.id }) { show ->
                     EpisodeItem(
-                        movie = movie,
-                        onClick = { onMovieClick(movie) }
+                        tvShow = show,
+                        onClick = { 
+                            // Opcional: ação de clique para séries se necessário no futuro
+                        }
                     )
                 }
             }

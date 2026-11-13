@@ -10,4 +10,5 @@ interface MoviesRemoteApi {
     suspend fun fetchNowPlayingMovies(): Result<MoviesResponseDto, DataError.Remote>
     suspend fun fetchUpcomingMovies(): Result<MoviesResponseDto, DataError.Remote>
     suspend fun fetchMovieActors(movieId: Int): Result<MovieActorsDto, DataError.Remote>
+    suspend fun fetchTvShows(): Result<MoviesResponseDto, DataError.Remote> // Novo contrato para séries
 }
