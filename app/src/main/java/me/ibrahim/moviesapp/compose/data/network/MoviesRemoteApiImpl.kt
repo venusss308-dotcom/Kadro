@@ -28,4 +28,9 @@ class MoviesRemoteApiImpl(private val httpClient: HttpClient) : MoviesRemoteApi 
         }
     }
 
+    override suspend fun fetchTvShows(): Result<MoviesResponseDto, DataError.Remote> {
+        return safeCall {
+            httpClient.get("${BuildConfig.BASE_URL}${RemoteApiEndpoints.TV_ON_THE_AIR}")
+        }
+    }
 }

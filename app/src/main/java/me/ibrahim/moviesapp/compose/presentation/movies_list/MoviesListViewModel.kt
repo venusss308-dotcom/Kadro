@@ -26,7 +26,7 @@ class MoviesListViewModel(private val repository: MoviesRepository) : ViewModel(
         .onStart {
             fetchNowPlayingMovies()
             fetchUpcomingMovies()
-            fetchTvShows() // Dispara a busca de séries reais ao abrir
+            fetchTvShows()
         }
         .stateIn(
             viewModelScope,
@@ -40,7 +40,8 @@ class MoviesListViewModel(private val repository: MoviesRepository) : ViewModel(
             repository.fetchUpcomingMovies().onSuccess { movies ->
                 _state.update { it.copy(upcomingMovies = movies, errorMsg = null) }
             }.onError { error ->
-                _state.update { it.copy(errorMsg = error.toUiText()) }
+                // Usando a representação em texto do erro para bater com o tipo String? do state
+                _state.update { it.copy(errorMsg = error.toUiText().toString()) }
             }
         }
     }
@@ -51,7 +52,7 @@ class MoviesListViewModel(private val repository: MoviesRepository) : ViewModel(
             repository.fetchNowPlayingMovies().onSuccess { movies ->
                 _state.update { it.copy(nowPlayingMovies = movies, errorMsg = null) }
             }.onError { error ->
-                _state.update { it.copy(errorMsg = error.toUiText()) }
+                _state.update { it.copy(errorMsg = error.toUiText().toString()) }
             }
         }
     }
@@ -62,7 +63,7 @@ class MoviesListViewModel(private val repository: MoviesRepository) : ViewModel(
             repository.fetchTvShows().onSuccess { shows ->
                 _state.update { it.copy(tvShows = shows, errorMsg = null) }
             }.onError { error ->
-                _state.update { it.copy(errorMsg = error.toUiText()) }
+                _state.update { it.copy(errorMsg = error.toUiText().toString()) }
             }
         }
     }
