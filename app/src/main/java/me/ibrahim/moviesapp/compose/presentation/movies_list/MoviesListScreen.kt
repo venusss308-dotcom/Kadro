@@ -5,6 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,6 +14,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -34,6 +37,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import me.ibrahim.moviesapp.compose.domain.Movie
+import me.ibrahim.moviesapp.compose.presentation.movies_list.components.EpisodeItem
 import me.ibrahim.moviesapp.compose.presentation.movies_list.components.MoviesList
 import me.ibrahim.moviesapp.compose.presentation.movies_list.components.TitledMoviesList
 import org.koin.androidx.compose.koinViewModel
@@ -56,22 +60,22 @@ fun MoviesListScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState()),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
+            verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            Spacer(modifier = Modifier.height(4.dp))
+            Spacer(modifier = Modifier.height(2.dp))
 
-            // Barra de pesquisa minimalista no topo
+            // Barra de pesquisa minimalista no topo (colada no topo igual ao exemplo)
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp)
                     .statusBarsPadding()
-                    .height(50.dp)
+                    .height(48.dp)
                     .background(
                         color = Color(0xFF1E1E1E),
-                        shape = RoundedCornerShape(25.dp)
+                        shape = RoundedCornerShape(24.dp)
                     )
-                    .padding(horizontal = 20.dp),
+                    .padding(horizontal = 18.dp),
                 contentAlignment = Alignment.CenterStart
             ) {
                 Row(
@@ -82,20 +86,18 @@ fun MoviesListScreen(
                     Text(
                         text = "Procurar títulos",
                         color = Color.Gray,
-                        fontSize = 15.sp
+                        fontSize = 14.sp
                     )
                     Icon(
                         imageVector = Icons.Filled.Search,
                         contentDescription = "Pesquisar",
                         tint = Color.Gray,
-                        modifier = Modifier.size(22.dp)
+                        modifier = Modifier.size(20.dp)
                     )
                 }
             }
 
-            Spacer(modifier = Modifier.height(4.dp))
-
-            // Cabeçalho: "Em Alta" na esquerda e "Filmes ▾" na direita
+            // Cabeçalho: "Em Alta" na esquerda e "Filmes ▾" na direita (perto dos cards)
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -122,28 +124,26 @@ fun MoviesListScreen(
                     Text(
                         text = selectedCategory,
                         color = Color.White,
-                        fontSize = 18.sp,
+                        fontSize = 16.sp,
                         fontWeight = FontWeight.Bold
                     )
                     Icon(
                         imageVector = Icons.Filled.KeyboardArrowDown,
                         contentDescription = "Trocar Categoria",
                         tint = Color.White,
-                        modifier = Modifier.size(22.dp)
+                        modifier = Modifier.size(20.dp)
                     )
                 }
             }
 
-            Spacer(modifier = Modifier.height(2.dp))
-
-            // Lista horizontal de "Em Alta"
+            // Lista horizontal de "Em Alta" (Cards verticais imersivos)
             TitledMoviesList(title = "") {
                 MoviesList(movies = state.nowPlayingMovies, onMovieClick = onMovieClick)
             }
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(8.dp))
 
-            // Seção "Novos Episódios" (populada com lançamentos atuais)
+            // Seção "NOVOS EPISÓDIOS" (Título em letras maiúsculas igual ao exemplo)
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -151,20 +151,28 @@ fun MoviesListScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "Novos Episódios",
+                    text = "NOVOS EPISÓDIOS",
                     color = Color.White,
-                    fontSize = 20.sp,
+                    fontSize = 18.sp,
                     fontWeight = FontWeight.Bold
                 )
             }
 
-            Spacer(modifier = Modifier.height(2.dp))
-
-            TitledMoviesList(title = "") {
-                MoviesList(movies = state.upcomingMovies, onMovieClick = onMovieClick)
+            // Lista horizontal de Novos Episódios com os cards horizontais menores
+            LazyRow(
+                contentPadding = PaddingValues(horizontal = 16.dp),
+                horizontalArrangement = Arrangement.spacedBy(12.dp),
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                items(state.upcomingMovies, key = { movie -> movie.id }) { movie ->
+                    EpisodeItem(
+                        movie = movie,
+                        onClick = { onMovieClick(movie) }
+                    )
+                }
             }
 
-            Spacer(modifier = Modifier.height(24.dp))
+            Spacer(modifier = Modifier.height(32.dp))
         }
     }
 }
