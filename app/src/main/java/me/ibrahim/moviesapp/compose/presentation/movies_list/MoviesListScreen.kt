@@ -1,6 +1,5 @@
 package me.ibrahim.moviesapp.compose.presentation.movies_list
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -31,7 +30,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -58,14 +56,8 @@ fun MoviesListScreen(
     Box(
         modifier = modifier
             .fillMaxSize()
-            .background(colorResource(id = R.color.blackBackground))
+            .background(Color.Black) // Preto absoluto e forte
     ) {
-        Image(
-            painter = painterResource(id = R.drawable.bg1),
-            contentDescription = null,
-            alpha = 1f
-        )
-
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -74,9 +66,7 @@ fun MoviesListScreen(
         ) {
             Spacer(modifier = Modifier.height(12.dp))
 
-            // Texto de saudação removido conforme solicitado.
-
-            // Nova barra de pesquisa minimalista ("Procurar títulos" com lupa na direita)
+            // Barra de pesquisa minimalista ("Procurar títulos" com lupa na direita)
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -138,7 +128,6 @@ fun MoviesListScreen(
                     MoviesList(movies = state.upcomingMovies, onMovieClick = onMovieClick)
                 }
             }
-
         }
     }
 }
